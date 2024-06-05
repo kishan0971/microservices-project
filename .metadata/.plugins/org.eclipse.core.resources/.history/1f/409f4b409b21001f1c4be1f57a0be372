@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: "HOTEL-SERVICE"
+          uri: lb://HOTEL-SERVICE
+          predicates:
+            - Path=/hotels/**

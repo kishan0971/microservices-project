@@ -1,0 +1,47 @@
+package com.in2it.hotel_service.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.in2it.hotel_service.entity.Hotel;
+import com.in2it.hotel_service.repository.HotelRepository;
+import com.in2it.hotel_service.service.HotelService;
+
+
+@Service
+public class HotelServiceImpl implements HotelService {
+
+	HotelRepository repository;
+	
+	@Override
+	public Hotel saveHotel(Hotel hotel) {
+		
+		return repository.save(hotel);
+	}
+
+	@Override
+	public List<Hotel> getAllHotels() {
+		
+		return repository.findAll();
+	}
+
+	@Override
+	public Hotel getHotelById(int id) {
+		
+		return repository.findById(id).orElseThrow();
+	}
+
+	@Override
+	public Hotel updateHotel(Hotel hotel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteHotel(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

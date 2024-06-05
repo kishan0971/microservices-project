@@ -1,0 +1,5 @@
+package com.in2it.hotel_service.service;
+
+public class HotelService {
+
+}

@@ -1,0 +1,9 @@
+package com.in2it.hotel_service.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.in2it.hotel_service.entity.Hotel;
+
+public interface HotelRepository extends JpaRepository<Hotel, Integer> {
+
+}

@@ -1,0 +1,5 @@
+package com.in2it.rating_service.service;
+
+public class RatingService {
+
+}

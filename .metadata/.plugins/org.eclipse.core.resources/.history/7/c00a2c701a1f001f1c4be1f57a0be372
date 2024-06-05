@@ -1,0 +1,105 @@
+package com.in2it.user_service.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.in2it.user_service.entities.Rating;
+import com.in2it.user_service.entities.Users;
+import com.in2it.user_service.exception.InvalidDataException;
+import com.in2it.user_service.exception.UserNotFoundException;
+import com.in2it.user_service.repository.UserRepository;
+import com.in2it.user_service.service.UserService;
+
+@Service
+public class USerServiceImpl implements UserService{
+	
+	@Autowired
+	private UserRepository repository;
+	
+	@Autowired
+	private RestTemplate template;
+	
+	private static final Logger LOGGER = LogManager.getLogger(USerServiceImpl.class);
+
+	@Override
+	public Users saveUser(Users users) {
+		
+		return repository.save(users);
+	}
+
+	@Override
+	public List<Users> getAllUser() {
+		
+		return repository.findAll();
+	}
+
+	@Override
+	public Users getUserById(int id) {
+		
+		System.out.println("======================================================");
+		Users user = repository.findById(id).orElseThrow(()->new UserNotFoundException("User dosen't exist with given id"));
+		List<Rating> ratings = template.getForObject("http://localhost:8083/ratings/rating/user/"+id, ArrayList.class);
+		user.setRatings(ratings);
+		LOGGER.info("=============================="+ratings);
+		return user;
+	}
+
+	@Override
+	public Users updateUser(Users users) {
+		Users extUser = repository.findById(users.getId()).orElseThrow(()->new UserNotFoundException("User dosen't exist with given id"));
+		LOGGER.info("Old Data to get Updated "+extUser.toString());
+		if(extUser!=null) {
+			extUser.setId(users.getId());
+			extUser.setAbout(users.getAbout());
+			extUser.setEmail(users.getEmail());
+			extUser.setName(users.getName());
+			
+			Users savedUser = repository.save(extUser);
+			LOGGER.info("New data after update "+savedUser.toString());
+			return savedUser;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean deleteUserById(int id) {
+		Users extUser = repository.findById(id).orElseThrow(()->new UserNotFoundException("User dosen't exist with given id"));
+		if(extUser!=null) {
+			repository.delete(extUser);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+//	==============================validator functions===================================================
+	
+	 // Function to validate the username
+	public boolean isValidUsername(String name)
+   {
+       String regex = "^[a-zA-Z]+(?:\\s+[a-zA-Z]+)*$";
+       Pattern p = Pattern.compile(regex);
+       if (name == null) {
+           throw new InvalidDataException("Name should contain only alphabetical charector and not more than one space");
+       }
+       Matcher m = p.matcher(name);
+       return m.matches();
+   }
+   
+   
+   
+
+}
+
+
+
+

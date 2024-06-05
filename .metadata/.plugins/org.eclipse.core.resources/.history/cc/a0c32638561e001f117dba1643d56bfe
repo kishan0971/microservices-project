@@ -1,0 +1,9 @@
+package com.in2it.user_service.exception;
+
+public class UseAllReadyException extends RuntimeException {
+	
+	public UseAllReadyException(String msg) {
+		super(msg);
+	}
+
+}

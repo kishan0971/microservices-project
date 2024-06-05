@@ -1,0 +1,5 @@
+package com.in2it.user_service.dto;
+
+public class UserDto {
+
+}

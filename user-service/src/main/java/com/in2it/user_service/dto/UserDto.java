@@ -1,0 +1,18 @@
+package com.in2it.user_service.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+//@Data
+public class UserDto {
+	
+	private int id;
+	private String name;
+	private String email;
+	private String about;
+	
+
+}
