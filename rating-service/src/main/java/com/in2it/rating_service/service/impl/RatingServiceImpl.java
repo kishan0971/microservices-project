@@ -79,4 +79,21 @@ public class RatingServiceImpl implements RatingService {
 		return repository.findByHotelId(id);
 	}
 
+	@Override
+	public Rating updateRatingFeedback(Rating rating) {
+		Rating exstRating = repository.findById(rating.getRatingId()).orElseThrow(()-> new RatingNotFoundException("Rating dosen't exist with given id"));
+		if(exstRating != null) {
+			if(rating.getFeedback()!=null) {
+				
+				exstRating.setFeedback(rating.getFeedback());
+			}
+			
+			
+			return repository.save(exstRating);
+		}
+		return null;
+	}
+
+	
+
 }

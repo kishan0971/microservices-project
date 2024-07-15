@@ -10,6 +10,7 @@ public interface RatingService {
 	List<Rating> getAllRatings();
 	Rating getRatingById(int id);
 	Rating updateRating(Rating rating);
+	Rating updateRatingFeedback(Rating rating);
 	List<Rating> getRatingsByUserId(int id);
 	List<Rating> getRatingsByHotelId(int id);
 	boolean deleteRating(int id);

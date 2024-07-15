@@ -1,5 +1,0 @@
-package com.in2it.user_service.entities;
-
-public class Rating {
-
-}

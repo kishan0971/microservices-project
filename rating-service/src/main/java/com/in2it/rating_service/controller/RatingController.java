@@ -13,8 +13,11 @@ import com.in2it.rating_service.entity.Rating;
 import com.in2it.rating_service.exception.RatingNotFoundException;
 import com.in2it.rating_service.service.RatingService;
 
+import jakarta.ws.rs.PATCH;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -62,6 +65,12 @@ public class RatingController {
 	@GetMapping("rating/hotel/{id}")
 	public List<Rating> getRatingsByHotelId(@PathVariable int id) {
 		return service.getRatingsByHotelId(id);
+	}
+	
+	
+	@PatchMapping("/feedback")
+	public Rating updateRatingFeedback(@RequestBody Rating rating) {
+		return service.updateRatingFeedback(rating);
 	}
 
 
